@@ -7,7 +7,7 @@
     "build:pwsh": "pwsh build_steps.ps1",
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development node --watch index.js",
-    "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand --testPathPattern=server/",
     "test-t": "cross-env NODE_ENV=test jest --verbose --runInBand -t",
     "start:test": "cross-env NODE_ENV=test node index.js"
   },
@@ -40,6 +40,6 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "globalTeardown": "./tests/teardown.js"
+    "globalTeardown": "./server/tests/teardown.js"
   }
 }
