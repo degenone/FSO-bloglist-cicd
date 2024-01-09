@@ -1,0 +1,57 @@
+.titlePanel {
+    min-height: 3.5rem;
+    margin-block-end: 0.75rem;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    border-bottom: 1px solid hsl(0, 0%, 0%, 0.3);
+}
+
+.titlePanel > button,
+.titlePanel > h2 {
+    margin-inline: 1rem;
+}
+
+.titlePanel > * {
+    margin-block: auto;
+}
+
+label {
+    margin-inline-end: 0.5rem;
+}
+
+form {
+    width: max-content;
+}
+
+.formGroup {
+    display: flex;
+    justify-content: space-between;
+    margin-block-end: 0.5rem;
+}
+
+legend {
+    font-size: 1.125rem;
+    font-weight: bold;
+}
+
+.notification {
+    background-color: hsl(159, 66%, 76%);
+    font-size: 1.125rem;
+    color: hsl(120, 100%, 25%);
+    padding-inline: 2.25rem;
+    padding-block: 1rem;
+    border: 5px solid;
+    border-radius: 0.25em;
+}
+
+.error {
+    color: firebrick;
+}
+
+.hidden {
+    display: none;
+}
+
+.blog-details > p:last-child {
+    margin-block-end: 0;
+}
