@@ -52,7 +52,7 @@ jobs:
             - name: e2e tests
               uses: cypress-io/github-action@v5
               with:
-                command: npm run test:e2e
+                command: npm --prefix ./client run test:e2e
                 start: npm run start:test, npm --prefix ./client run dev
                 wait-on: http://localhost:5173
             - name: Deploy to Render
