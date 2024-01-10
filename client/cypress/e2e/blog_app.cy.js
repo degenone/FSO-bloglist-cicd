@@ -138,44 +138,52 @@ describe('Blog app', () => {
                     .should('not.exist');
             });
 
-            it('blogs are in descending likes order', {
-                defaultCommandTimeout: 10_000
-            }, function () {
-                const wait = 250;
-                cy.get('.blog-header').first().find('.btn-toggle').click();
-                cy.get('.blog-details').first().find('.btn-like').click();
+            it(
+                'blogs are in descending likes order',
+                {
+                    defaultCommandTimeout: 10_000,
+                },
+                function () {
+                    const wait = 250;
+                    cy.get('.blog-header').first().find('.btn-toggle').click();
+                    cy.get('.blog-details').first().find('.btn-like').click();
 
-                cy.get('.blog-header').last().find('.btn-toggle').click();
-                cy.wait(wait, { log: false });
-                cy.get('.blog-details')
-                    .last()
-                    .find('.btn-like')
-                    .as('likeBtn')
-                    .click();
-                cy.wait(wait, { log: false });
-                cy.get('@likeBtn').click();
-                cy.wait(wait, { log: false });
-                cy.reload();
+                    cy.get('.blog-header').last().find('.btn-toggle').click();
+                    cy.wait(wait, { log: false });
+                    cy.get('.blog-details')
+                        .last()
+                        .find('.btn-like')
+                        .as('likeBtn')
+                        .click();
+                    cy.wait(wait, { log: false });
+                    cy.get('@likeBtn').click();
+                    cy.wait(wait, { log: false });
+                    cy.reload();
 
-                cy.get('.blog-header')
-                    .first()
-                    .should('contain', 'blog 3')
-                    .find('.btn-toggle')
-                    .click();
-                cy.get('.blog-header')
-                    .eq(1)
-                    .should('contain', 'blog 1')
-                    .find('.btn-toggle')
-                    .click();
-                cy.get('.blog-header')
-                    .last()
-                    .should('contain', 'blog 2')
-                    .find('.btn-toggle')
-                    .click();
-                cy.get('.blog-details').first().should('contain', 'Likes: 2');
-                cy.get('.blog-details').eq(1).should('contain', 'Likes: 1');
-                cy.get('.blog-details').last().should('contain', 'Likes: 0');
-            });
+                    cy.get('.blog-header')
+                        .first()
+                        .should('contain', 'blog 3')
+                        .find('.btn-toggle')
+                        .click();
+                    cy.get('.blog-header')
+                        .eq(1)
+                        .should('contain', 'blog 1')
+                        .find('.btn-toggle')
+                        .click();
+                    cy.get('.blog-header')
+                        .last()
+                        .should('contain', 'blog 2')
+                        .find('.btn-toggle')
+                        .click();
+                    cy.get('.blog-details')
+                        .first()
+                        .should('contain', 'Likes: 2');
+                    cy.get('.blog-details').eq(1).should('contain', 'Likes: 1');
+                    cy.get('.blog-details')
+                        .last()
+                        .should('contain', 'Likes: 0');
+                }
+            );
         });
     });
 });
