@@ -1,4 +1,6 @@
 #!/bin/sh
 rm -rf dist
+npm ci
+npm --prefix ./client ci
 npm --prefix ./client run build
 mv client/dist .

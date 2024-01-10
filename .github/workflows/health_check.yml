@@ -1,0 +1,25 @@
+name: Health check
+
+on:
+    schedule:
+        - cron: '0 12 * * *'
+
+jobs:
+    health_check:
+        if: ${{ vars.HEALTH_CHECK_ACTIVE == 'true' }}
+        runs-on: ubuntu-latest
+        steps:
+            - name: check
+              uses: Jtalk/url-health-check-action@v3.2
+              with:
+                url: https://bloglist-fso-degenone.onrender.com/health
+            - name: report
+              if: always()
+              env:
+                status_ok: ${{ job.status == 'success' }}
+              run: |
+                if ${{ env.status_ok }}; then
+                    echo "Health check ok"
+                else
+                    echo "Health check fail"
+                fi
