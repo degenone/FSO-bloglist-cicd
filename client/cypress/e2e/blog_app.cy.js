@@ -141,19 +141,20 @@ describe('Blog app', () => {
             it('blogs are in descending likes order', {
                 defaultCommandTimeout: 10_000
             }, function () {
+                const wait = 250;
                 cy.get('.blog-header').first().find('.btn-toggle').click();
                 cy.get('.blog-details').first().find('.btn-like').click();
 
                 cy.get('.blog-header').last().find('.btn-toggle').click();
-                cy.wait(150, { log: false });
+                cy.wait(wait, { log: false });
                 cy.get('.blog-details')
                     .last()
                     .find('.btn-like')
                     .as('likeBtn')
                     .click();
-                cy.wait(150, { log: false });
+                cy.wait(wait, { log: false });
                 cy.get('@likeBtn').click();
-                cy.wait(150, { log: false });
+                cy.wait(wait, { log: false });
                 cy.reload();
 
                 cy.get('.blog-header')

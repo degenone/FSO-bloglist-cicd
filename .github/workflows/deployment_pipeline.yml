@@ -53,7 +53,9 @@ jobs:
               uses: cypress-io/github-action@v5
               with:
                 command: npm --prefix ./client run test:e2e
-                start: npm run start:test, npm --prefix ./client run dev
+                start: |
+                  npm run start:test
+                  npm --prefix ./client run dev
                 wait-on: http://localhost:5173
             - name: Deploy to Render
               if: github.event_name == 'push' && needs.check-commits.outputs.skip == 'false'
