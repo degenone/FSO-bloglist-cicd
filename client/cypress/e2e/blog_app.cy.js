@@ -144,7 +144,7 @@ describe('Blog app', () => {
                     defaultCommandTimeout: 10_000,
                 },
                 function () {
-                    const wait = 250;
+                    const wait = 1_000;
                     cy.get('.blog-header').first().find('.btn-toggle').click();
                     cy.get('.blog-details').first().find('.btn-like').click();
 

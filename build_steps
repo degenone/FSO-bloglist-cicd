@@ -1,6 +1,4 @@
 #!/bin/sh
 rm -rf dist
-cd client
-npm run build
-mv dist ..
-cd -
+npm --prefix ./client run build
+mv client/dist .
