@@ -1,0 +1,68 @@
+name: Deployment pipeline
+
+on:
+    push:
+        branches: ["main"]
+    pull_request:
+        branches: ["main"]
+        types: ["opened", "synchronize"]
+
+jobs:
+    check-commits:
+        runs-on: ubuntu-latest
+        outputs:
+            skip: ${{ steps.check.outputs.skip }}
+            tag: ${{ steps.check.outputs.tag }}
+        steps:
+            - uses: actions/checkout@v3
+            - id: check
+              env:
+                COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
+              run: |
+                  skip=$(echo "$COMMIT_MESSAGES" | grep -qi "#skip" && echo true || echo false)
+                  echo "skip=$skip" >> "$GITHUB_OUTPUT"
+                  tag=$(echo "$COMMIT_MESSAGES" | grep -oEi '#(major|minor|patch)' | head -n1 | sed 's/#//')
+                  echo "tag=$tag" >> "$GITHUB_OUTPUT"
+    
+    pipeline:
+        runs-on: ubuntu-latest
+        needs: check-commits
+        steps:
+            - uses: actions/checkout@v3
+            - uses: creyD/prettier_action@v4.3
+              if: github.event_name == 'push'
+              with:
+                prettier_options: --write **/*.{js,jsx,cjs}
+            - uses: actions/setup-node@v3
+              with:
+                node-version: '20'
+            - name: install dependecies
+              run: |
+                npm i &
+                cd client
+                npm i
+            - name: server unit tests
+              run: npm run test
+            - name: client unit tests
+              run: |
+                cd client
+                npm run test
+            - name: e2e tests
+              uses: cypress-io/github-action@v5
+              with:
+                command: npm run test:e2e
+                start: ./test_e2e
+                wait-on: http://localhost:5174
+            - name: Deploy to Render
+              if: github.event_name == 'push' && needs.check-commits.outputs.skip == 'false'
+              run: echo "TODO:deployment curl here"
+            - name: Notification
+              if: always()
+              run: echo "TODO:Notification for job status '${{ job.status }}'"
+
+    tag_releases:
+        needs: [pipeline, check-commits]
+        if: ${{ github.event_name == 'push' && needs.check-commits.outputs.tag != '' }}
+        runs-on: ubuntu-latest
+        steps:
+            - run: echo "TODO:would add tag ${{ needs.check-commits.outputs.tag }}"

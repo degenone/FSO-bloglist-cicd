@@ -1,0 +1,4 @@
+#!/bin/sh
+npm run start:test &
+cd client
+npm run dev
