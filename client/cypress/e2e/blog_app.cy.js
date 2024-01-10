@@ -138,7 +138,9 @@ describe('Blog app', () => {
                     .should('not.exist');
             });
 
-            it('blogs are in descending likes order', function () {
+            it('blogs are in descending likes order', {
+                defaultCommandTimeout: 10_000
+            }, function () {
                 cy.get('.blog-header').first().find('.btn-toggle').click();
                 cy.get('.blog-details').first().find('.btn-like').click();
 

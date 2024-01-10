@@ -9,8 +9,7 @@
     "dev": "cross-env NODE_ENV=development node --watch index.js",
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand --testPathPattern=server/",
     "test-t": "cross-env NODE_ENV=test jest --verbose --runInBand -t",
-    "start:test": "cross-env NODE_ENV=test node index.js",
-    "start:e2e": "npm run start:test & cd client && npm run dev &"
+    "start:test": "cross-env NODE_ENV=test node index.js"
   },
   "repository": {
     "type": "git",
